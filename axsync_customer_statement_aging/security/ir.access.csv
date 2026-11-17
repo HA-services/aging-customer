@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+axsync_statement_log_billing,AXSync statement log: billing users,axsync.statement.log,account.group_account_invoice,r,
+axsync_statement_log_manager,AXSync statement log: accounting managers,axsync.statement.log,account.group_account_manager,crud,
+axsync_statement_wizard_billing,AXSync statement wizard: billing users,axsync.statement.wizard,account.group_account_invoice,crud,
+axsync_statement_aging_billing,AXSync aging report: billing users,axsync.statement.aging,account.group_account_invoice,crud,
+axsync_statement_log_company_rule,AXSync statement log: multi-company,axsync.statement.log,,crud,"[('company_id', 'in', company_ids + [False])]"
