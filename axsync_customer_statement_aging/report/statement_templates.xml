@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The body of one statement. Used by the PDF and by the on-screen preview. -->
+    <template id="statement_document">
+        <t t-set="cur" t-value="st['currency']"/>
+        <t t-set="partner" t-value="st['partner']"/>
+        <t t-set="vendor" t-value="st['side'] == 'vendor'"/>
+        <t t-set="activity" t-value="st['type'] == 'activity'"/>
+        <t t-set="show_due" t-value="opts.get('show_due', True)"/>
+        <t t-set="show_cur" t-value="opts.get('show_currency', True) and st['has_foreign']"/>
+        <t t-set="th" t-value="'padding: 5px 6px; background-color: #e7ecf3; border: 1px solid #c9d2df; font-weight: bold; font-size: 11px;'"/>
+        <t t-set="td" t-value="'padding: 4px 6px; border-bottom: 1px solid #e3e7ee; font-size: 11px;'"/>
+        <div style="font-family: Arial, Helvetica, sans-serif; color: #212529; font-size: 12px;">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;">
+                <tr>
+                    <td style="width: 52%; vertical-align: top; padding: 0;">
+                        <div style="font-size: 11px; color: #6c757d; text-transform: uppercase; letter-spacing: 1px;" t-if="vendor">Vendor</div>
+                        <div style="font-size: 11px; color: #6c757d; text-transform: uppercase; letter-spacing: 1px;" t-else="">Customer</div>
+                        <div style="font-size: 15px; font-weight: bold; margin-bottom: 2px;" t-out="partner.display_name"/>
+                        <div t-field="partner.commercial_partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                        <div t-if="partner.vat" style="margin-top: 2px;"><span style="color: #6c757d;">Tax ID:</span> <span t-out="partner.vat"/></div>
+                    </td>
+                    <td style="width: 48%; vertical-align: top; padding: 0; text-align: right;">
+                        <div style="font-size: 20px; font-weight: bold; color: #1d3557;">
+                            <t t-if="vendor">Vendor Statement</t><t t-else="">Statement of Account</t>
+                        </div>
+                        <div><span style="color: #6c757d;">Statement date:</span> <strong t-out="st['as_of']" t-options='{"widget": "date"}'/></div>
+                        <div t-if="activity"><span style="color: #6c757d;">Period:</span>
+                            <span t-out="st['date_from']" t-options='{"widget": "date"}'/> - <span t-out="st['as_of']" t-options='{"widget": "date"}'/></div>
+                        <div t-if="partner.ref"><span style="color: #6c757d;">Account reference:</span> <span t-out="partner.ref"/></div>
+                        <div><span style="color: #6c757d;">Currency:</span> <span t-out="cur.name"/></div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- summary -->
+            <table style="width: 100%; border-collapse: separate; border-spacing: 6px 0; margin: 0 -6px 14px -6px;">
+                <tr>
+                    <t t-if="activity">
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Opening balance</div>
+                            <div style="font-size: 15px; font-weight: bold;" t-out="st['opening']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;"><t t-if="vendor">Bills</t><t t-else="">Invoiced</t></div>
+                            <div style="font-size: 15px; font-weight: bold;" t-out="st['charges']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Payments and credits</div>
+                            <div style="font-size: 15px; font-weight: bold;" t-out="st['credits']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 2px solid #1d3557; background-color: #f3f6fb; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Closing balance</div>
+                            <div style="font-size: 15px; font-weight: bold; color: #1d3557;" t-out="st['closing']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                    </t>
+                    <t t-else="">
+                        <td style="width: 25%; border: 2px solid #1d3557; background-color: #f3f6fb; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Total due</div>
+                            <div style="font-size: 15px; font-weight: bold; color: #1d3557;" t-out="st['total_open']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Overdue</div>
+                            <div t-attf-style="font-size: 15px; font-weight: bold; #{'color: #b02a37;' if st['overdue'] &gt; 0 else ''}" t-out="st['overdue']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Not yet due</div>
+                            <div style="font-size: 15px; font-weight: bold;" t-out="st['not_due']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                        <td style="width: 25%; border: 1px solid #c9d2df; padding: 8px 10px;">
+                            <div style="font-size: 10px; color: #6c757d; text-transform: uppercase;">Oldest overdue</div>
+                            <div style="font-size: 15px; font-weight: bold;"><t t-out="st['oldest_days']"/> days</div>
+                        </td>
+                    </t>
+                </tr>
+            </table>
+
+            <!-- aging -->
+            <div style="font-weight: bold; margin-bottom: 4px;">
+                Aging of open items
+                <span style="font-weight: normal; color: #6c757d; font-size: 11px;">
+                    (<t t-if="st['basis'] == 'due'">days past the due date</t><t t-else="">days since the invoice date</t>)
+                </span>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+                <thead>
+                    <tr>
+                        <t t-foreach="labels" t-as="label">
+                            <th t-att-style="th + ' text-align: right;'"><t t-out="label"/></th>
+                        </t>
+                        <th t-att-style="th + ' text-align: right;'">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <t t-foreach="st['aging']" t-as="value">
+                            <td t-att-style="td + ' text-align: right;' + (' color: #b02a37; font-weight: bold;' if (value &gt; 0 and not value_first) else '')">
+                                <t t-if="cur.is_zero(value)">-</t>
+                                <t t-else=""><span t-out="value" t-options="{'widget': 'monetary', 'display_currency': cur}"/></t>
+                            </td>
+                        </t>
+                        <td t-att-style="td + ' text-align: right; font-weight: bold;'">
+                            <span t-out="st['total_open']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- lines -->
+            <div style="font-weight: bold; margin-bottom: 4px;">
+                <t t-if="activity">Transactions</t><t t-else="">Open items</t>
+            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th t-att-style="th">Date</th>
+                        <th t-att-style="th">Number</th>
+                        <th t-att-style="th">Reference</th>
+                        <th t-att-style="th" t-if="activity">Type</th>
+                        <th t-att-style="th" t-if="show_due">Due date</th>
+                        <t t-if="activity">
+                            <th t-att-style="th + ' text-align: right;'"><t t-if="vendor">Bills</t><t t-else="">Invoices</t></th>
+                            <th t-att-style="th + ' text-align: right;'">Payments / credits</th>
+                            <th t-att-style="th + ' text-align: right;'">Balance</th>
+                        </t>
+                        <t t-else="">
+                            <th t-att-style="th + ' text-align: right;'">Days overdue</th>
+                            <th t-att-style="th + ' text-align: right;'" t-if="show_cur">Original (currency)</th>
+                            <th t-att-style="th + ' text-align: right;'">Original</th>
+                            <th t-att-style="th + ' text-align: right;'">Open amount</th>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="activity">
+                        <tr style="background-color: #f8f9fb;">
+                            <td t-att-style="td" colspan="3"><strong>Opening balance</strong></td>
+                            <td t-att-style="td" t-if="True"/>
+                            <td t-att-style="td" t-if="show_due"/>
+                            <td t-att-style="td"/>
+                            <td t-att-style="td"/>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold;'" t-out="st['opening']" t-options="{'widget': 'monetary', 'display_currency': cur}"/>
+                        </tr>
+                        <tr t-foreach="st['lines']" t-as="line">
+                            <td t-att-style="td"><span t-out="line['date']" t-options='{"widget": "date"}'/></td>
+                            <td t-att-style="td"><span t-out="line['name']"/></td>
+                            <td t-att-style="td"><span t-out="line['ref']"/></td>
+                            <td t-att-style="td"><span t-out="line['kind']"/></td>
+                            <td t-att-style="td" t-if="show_due"><span t-out="line['due']" t-options='{"widget": "date"}'/></td>
+                            <td t-att-style="td + ' text-align: right;'"><span t-if="line['charge']" t-out="line['charge']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                            <td t-att-style="td + ' text-align: right;'"><span t-if="line['credit']" t-out="line['credit']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                            <td t-att-style="td + ' text-align: right;'"><span t-out="line['balance']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                        </tr>
+                        <tr style="background-color: #f3f6fb;">
+                            <td t-att-style="td + ' font-weight: bold; border-top: 2px solid #1d3557;'" colspan="3">Closing balance</td>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'"/>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'" t-if="show_due"/>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold; border-top: 2px solid #1d3557;'"><span t-out="st['charges']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold; border-top: 2px solid #1d3557;'"><span t-out="st['credits']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold; font-size: 13px; color: #1d3557; border-top: 2px solid #1d3557;'"><span t-out="st['closing']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                        </tr>
+                    </t>
+                    <t t-else="">
+                        <tr t-foreach="st['items']" t-as="item">
+                            <td t-att-style="td"><span t-out="item['date']" t-options='{"widget": "date"}'/></td>
+                            <td t-att-style="td"><span t-out="item['name']"/> <span t-if="item['original'] &lt; 0" style="color: #6c757d;">(<t t-out="item['kind']"/>)</span></td>
+                            <td t-att-style="td"><span t-out="item['ref']"/></td>
+                            <td t-att-style="td" t-if="show_due"><span t-out="item['due']" t-options='{"widget": "date"}'/></td>
+                            <td t-att-style="td + ' text-align: right;' + (' color: #b02a37;' if item['days'] &gt; 0 else '')"><t t-if="item['days'] &gt; 0" t-out="item['days']"/></td>
+                            <td t-att-style="td + ' text-align: right;'" t-if="show_cur"><span t-if="item['foreign']" t-out="item['cur_original']" t-options="{'widget': 'monetary', 'display_currency': item['currency']}"/></td>
+                            <td t-att-style="td + ' text-align: right;'"><span t-out="item['original']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold;'"><span t-out="item['amount']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                        </tr>
+                        <tr style="background-color: #f3f6fb;">
+                            <td t-att-style="td + ' font-weight: bold; border-top: 2px solid #1d3557;'" colspan="3">Total due</td>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'" t-if="show_due"/>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'"/>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'" t-if="show_cur"/>
+                            <td t-att-style="td + ' border-top: 2px solid #1d3557;'"/>
+                            <td t-att-style="td + ' text-align: right; font-weight: bold; font-size: 13px; color: #1d3557; border-top: 2px solid #1d3557;'"><span t-out="st['total_open']" t-options="{'widget': 'monetary', 'display_currency': cur}"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <p t-if="not st['lines'] and not activity" style="margin-top: 8px; color: #6c757d;">There are no open items at this date.</p>
+
+            <div t-if="opts.get('note')" style="margin-top: 16px; white-space: pre-line;" t-out="opts['note']"/>
+            <div t-if="opts.get('bank') and not vendor" style="margin-top: 12px; padding: 8px 10px; border: 1px solid #c9d2df; background-color: #f8f9fb;">
+                <div style="font-weight: bold; margin-bottom: 2px;">Payment details</div>
+                <div style="white-space: pre-line;" t-out="opts['bank']"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="st" t-value="statements[o.id]"/>
+                <t t-set="company" t-value="st['company']"/>
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-call="axsync_customer_statement_aging.statement_document"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

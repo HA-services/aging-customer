@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="axsync_statement_menu_root" name="Statements" parent="account.menu_finance"
+              sequence="26" groups="account.group_account_invoice"/>
+    <menuitem id="axsync_statement_menu_customer" name="Customer Statements" parent="axsync_statement_menu_root"
+              action="axsync_statement_wizard_customer_action" sequence="10"/>
+    <menuitem id="axsync_statement_menu_vendor" name="Vendor Statements" parent="axsync_statement_menu_root"
+              action="axsync_statement_wizard_vendor_action" sequence="20"/>
+    <menuitem id="axsync_statement_menu_log" name="Statements Sent" parent="axsync_statement_menu_root"
+              action="axsync_statement_log_action" sequence="30"/>
+</odoo>

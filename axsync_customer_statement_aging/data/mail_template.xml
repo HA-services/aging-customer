@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_template_statement" model="mail.template">
+        <field name="name">Statement of Account</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">{{ (ctx.get('axsync_statement') or {}).get('company_name') or user.company_id.name }}: {{ 'vendor statement' if (ctx.get('axsync_statement') or {}).get('is_vendor') else 'statement of account' }}{{ ' as of ' + (ctx.get('axsync_statement') or {}).get('as_of') if (ctx.get('axsync_statement') or {}).get('as_of') else '' }}</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <t t-set="ax" t-value="ctx.get('axsync_statement') or {}"/>
+    <p style="margin: 0px 0px 12px 0px;">Dear <t t-out="object.name or 'customer'"/>,</p>
+    <t t-if="ax.get('is_vendor')">
+        <p style="margin: 0px 0px 12px 0px;">
+            Please find attached the statement of what <t t-out="ax.get('company_name')"/> owes you as of
+            <t t-out="ax.get('as_of')"/>. The balance is <strong><t t-out="ax.get('balance')"/></strong>.
+        </p>
+    </t>
+    <t t-else="">
+        <p style="margin: 0px 0px 12px 0px;">
+            Please find attached your statement of account from <t t-out="ax.get('company_name')"/> as of
+            <t t-out="ax.get('as_of')"/>. The outstanding balance is <strong><t t-out="ax.get('balance')"/></strong><t t-if="ax.get('has_overdue')">, of which <strong><t t-out="ax.get('overdue')"/></strong> is overdue</t>.
+        </p>
+        <t t-if="ax.get('has_overdue')">
+            <p style="margin: 0px 0px 12px 0px;">We would be grateful if you could arrange payment of the overdue amount. If you have already paid, please ignore this reminder and let us know the payment date.</p>
+        </t>
+    </t>
+    <t t-if="ax.get('note')">
+        <p style="margin: 0px 0px 12px 0px; white-space: pre-line;"><t t-out="ax.get('note')"/></p>
+    </t>
+    <t t-if="ax.get('bank') and not ax.get('is_vendor')">
+        <p style="margin: 0px 0px 12px 0px; white-space: pre-line;"><strong>Payment details</strong><br/><t t-out="ax.get('bank')"/></p>
+    </t>
+    <p style="margin: 0px 0px 12px 0px;">If anything in the statement looks wrong, reply to this email and we will check it with you.</p>
+    <p style="margin: 0px;">Kind regards,<br/><t t-out="ax.get('company_name')"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>

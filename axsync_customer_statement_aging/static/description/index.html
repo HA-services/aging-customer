@@ -1,0 +1,223 @@
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0; border-bottom: 1px solid #dee2e6;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <img src="axsync_icon.png" class="img img-fluid" alt="AXSync" style="margin: 0 0 10px 0;"/>
+        </div>
+        <div class="col-md-10">
+          <p class="text-muted" style="margin: 0; font-size: 14px;">AXSync | Odoo 19.0 | Accounting</p>
+          <h1 style="margin: 5px 0 10px 0; font-size: 36px;">AXSync Customer Statement Aging</h1>
+          <h3 class="text-muted" style="margin: 0 0 15px 0;">Customer and vendor statements of account with aging, sent automatically.</h3>
+          <p style="font-size: 17px;">Show every customer what they owe and how late it is. Print, export to Excel or email statements to everyone in one click, or let Odoo send them every week or month.</p>
+          <p><strong>Value in one line:</strong> it replaces the monthly spreadsheet of statements with a reviewed, repeatable run that you can schedule.</p>
+          <p><span class="badge badge-primary">Odoo 19.0</span> <span class="badge badge-secondary">Invoicing</span> <span class="badge badge-secondary">No extra Python libraries</span></p>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12">
+          <img src="axsync_screenshot_1.png" class="img img-fluid" alt="Aging report with a column per bucket, total due, overdue amount and oldest item per customer" style="border: 1px solid #dee2e6;"/>
+          <p class="text-muted" style="margin: 5px 0 0 0; font-size: 13px;">The aging report on Odoo 19.0, shown with demo data for fictional companies.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">What This Module Is For</h2>
+      <p>A statement of account is a single page that shows a customer all open invoices, credit notes and payments, how old each item is and the total due. It is what customers ask for, what auditors expect and the easiest way to start a payment conversation.</p>
+      <p>Odoo can print an invoice or a follow-up letter, but it has no ready statement that you can run for all customers, age by bucket, send by email and schedule. This module adds exactly that, for customers and for vendors, using only Invoicing and Discuss.</p>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">The Business Problems</h2>
+      <div class="row">
+        <div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Customers say they never got a statement</h5><p class="text-muted" style="margin: 0;">Statements are built by hand at month end, sent late, or skipped when the team is busy.</p></div></div></div><div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Nobody knows who is overdue by how much</h5><p class="text-muted" style="margin: 0;">A list of invoices does not show who is 30, 60 or 90 days late.</p></div></div></div><div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Collections starts too late</h5><p class="text-muted" style="margin: 0;">Without a regular reminder, overdue balances grow quietly.</p></div></div></div><div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Hours of copy and paste</h5><p class="text-muted" style="margin: 0;">Exporting ledgers, formatting a sheet and emailing each customer takes an afternoon.</p></div></div></div><div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Disputes about the balance</h5><p class="text-muted" style="margin: 0;">A customer and your books disagree, and there is no clean document from a given date to settle it.</p></div></div></div><div class="col-md-4" style="margin-bottom: 15px;"><div class="card"><div class="card-body"><h5>Suppliers want to reconcile too</h5><p class="text-muted" style="margin: 0;">Vendors send their statements, but you cannot easily send or read your own side.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">The Solution</h2>
+      <table class="table table-bordered">
+        <thead class="thead-light"><tr><th>Problem</th><th>How the module addresses it</th></tr></thead>
+        <tbody>
+          <tr><td>Statements not sent</td><td>Weekly or monthly automatic sending, or one click for a manual run.</td></tr>
+          <tr><td>No view of lateness</td><td>Six aging buckets on every statement and a pivot and graph aging report.</td></tr>
+          <tr><td>Manual work</td><td>PDF, Excel and email from one wizard with a live preview.</td></tr>
+          <tr><td>Balance disputes</td><td>A statement as of any past date, with a clear list of open items.</td></tr>
+          <tr><td>Vendor reconciliation</td><td>The same statement for vendors, from the payable side.</td></tr>
+          <tr><td>No proof of sending</td><td>A log with recipients, date, amounts and the attached PDF.</td></tr>
+        </tbody>
+      </table>
+      <p>It works on posted accounting entries, so it covers invoices, credit notes, payments and manual journal entries that carry a partner, whether or not Sales or Purchase is installed.</p>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Feature Breakdown</h2>
+      <h4 style="margin-top: 20px;">1. Open item and balance forward statements</h4>
+      <p>Open Items lists what is unpaid. Balance Forward shows the opening balance, the charges and credits of a period with a running balance, and the closing balance. Choose per run or set a default per company.</p>
+      <h4 style="margin-top: 20px;">2. Customers and vendors</h4>
+      <p>The same statement works for the money customers owe you and the money you owe vendors. Vendor statements use the payable side and are never sent with your bank details.</p>
+      <h4 style="margin-top: 20px;">3. Aging in six buckets</h4>
+      <p>Current, 1-30, 31-60, 61-90, 91-120 and 120+ days, counted from the due date or the invoice date. Shown on every statement, in the aging report and in the Excel file.</p>
+      <h4 style="margin-top: 20px;">4. Statement as of any date</h4>
+      <p>Pick a past statement date and the module rebuilds the position of that day. Payments reconciled later are shown as open again, which settles most balance disputes.</p>
+      <h4 style="margin-top: 20px;">5. Wizard with live preview</h4>
+      <p>Choose who, what and when and see the first statement before anything is printed or sent. Select partners, take everyone with a balance, only overdue partners, and set a minimum balance.</p>
+      <h4 style="margin-top: 20px;">6. PDF, Excel and email from one place</h4>
+      <p>Print one combined PDF, download an Excel file with an aging summary and a sheet per partner, or email every statement with its PDF attached.</p>
+      <h4 style="margin-top: 20px;">7. Automatic sending</h4>
+      <p>Weekly or monthly, with a minimum balance and an option for overdue customers only. A customer is not sent the same statement twice on the same day. Partners can be excluded.</p>
+      <h4 style="margin-top: 20px;">8. Smart email text</h4>
+      <p>Customers with overdue amounts get a polite payment reminder with the amounts. Others get a plain statement. Your message and payment details are added.</p>
+      <h4 style="margin-top: 20px;">9. Statements Sent log</h4>
+      <p>Every email is recorded with partner, recipients, date, amounts, source and the PDF. Partners without an email address and failures are listed under Needs Attention.</p>
+      <h4 style="margin-top: 20px;">10. Aging Report</h4>
+      <p>List, pivot and graph views of the aging for the whole selection, with totals. Filter, group and export with the standard Odoo tools.</p>
+      <h4 style="margin-top: 20px;">11. On the partner form</h4>
+      <p>A Statement button, a Statements tab with receivable, overdue and payable balances, a statement email override, an exclude option, the last statement sent and the history.</p>
+      <h4 style="margin-top: 20px;">12. Multi-currency and multi-company</h4>
+      <p>Foreign currency documents are shown in the company currency with the original amount if enabled. Settings, statements and logs are per company.</p>
+
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Screenshots</h2>
+      <p class="text-muted">All screenshots come from the module running on Odoo 19.0 with demo data for fictional companies.</p>
+      <h5 style="margin-top: 25px;">1. Customer aging report</h5>
+      <img src="axsync_screenshot_1.png" class="img img-fluid" alt="Aging report with a column per bucket, total due, overdue amount and oldest item per customer" style="border: 1px solid #dee2e6;"/>
+      <h5 style="margin-top: 25px;">2. Statement wizard with live preview</h5>
+      <img src="axsync_screenshot_2.png" class="img img-fluid" alt="Statement wizard with options and a preview of the first statement" style="border: 1px solid #dee2e6;"/>
+      <h5 style="margin-top: 25px;">3. The printed statement</h5>
+      <img src="axsync_screenshot_3.png" class="img img-fluid" alt="Statement of account with summary, aging row, open items, message and payment details" style="border: 1px solid #dee2e6;"/>
+      <h5 style="margin-top: 25px;">4. Statements Sent log</h5>
+      <img src="axsync_screenshot_4.png" class="img img-fluid" alt="Log of statements with status, source and amounts" style="border: 1px solid #dee2e6;"/>
+      <h5 style="margin-top: 25px;">5. Settings</h5>
+      <img src="axsync_screenshot_5.png" class="img img-fluid" alt="Customer statement defaults and automatic sending in the Invoicing settings" style="border: 1px solid #dee2e6;"/>
+      <h5 style="margin-top: 25px;">6. Statements tab on the partner</h5>
+      <img src="axsync_screenshot_6.png" class="img img-fluid" alt="Partner form with balances, statement email, exclude option and history" style="border: 1px solid #dee2e6;"/>
+
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Business Benefits</h2>
+      <div class="row">
+        <div class="col-md-4"><h5>Faster collections</h5><p class="text-muted">Customers see exactly what is late and receive a reminder on a regular rhythm.</p></div>
+        <div class="col-md-4"><h5>Hours saved every month</h5><p class="text-muted">One run replaces exporting, formatting and emailing each customer by hand.</p></div>
+        <div class="col-md-4"><h5>Fewer disputes</h5><p class="text-muted">A dated statement with every open item ends most arguments about the balance.</p></div>
+        <div class="col-md-4"><h5>Proof of sending</h5><p class="text-muted">Every statement is logged with its recipients and PDF.</p></div>
+        <div class="col-md-4"><h5>Safe by default</h5><p class="text-muted">Nothing is sent automatically until you switch it on, and nobody receives the same statement twice in a day.</p></div>
+        <div class="col-md-4"><h5>Native workflow</h5><p class="text-muted">Built on standard accounting entries, mail and reports. No external services.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">How It Works</h2>
+      <ol>
+        <li><strong>Install the module.</strong> Install Customer Statement Aging from the Apps menu.</li>
+        <li><strong>Set your defaults.</strong> Open Invoicing &gt; Configuration &gt; Settings &gt; Customer Statements. Choose the statement type, the aging basis, a message and your payment details.</li>
+        <li><strong>Open a statement run.</strong> Go to Invoicing &gt; Statements &gt; Customer Statements. Pick the partners and check the preview.</li>
+        <li><strong>Print, export or send.</strong> Use Print PDF, Export Excel or Send by Email, or open the Aging Report for the overview.</li>
+        <li><strong>Check the log.</strong> Invoicing &gt; Statements &gt; Statements Sent shows what was queued and which partners had no email address.</li>
+        <li><strong>Switch on the schedule.</strong> Turn on Send Statements Automatically and pick weekly or monthly, a minimum balance and whether only overdue customers should receive it.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Compatibility and Requirements</h2>
+      <table class="table table-bordered">
+        <tbody>
+          <tr><th style="width: 30%;">Odoo version</th><td>19.0 only. Separate builds exist for the other versions.</td></tr>
+          <tr><th>Required Odoo apps</th><td>Invoicing (account) and Discuss (mail). Sales and Purchase are not required.</td></tr>
+          <tr><th>Python libraries</th><td>None beyond Odoo itself. Excel export uses xlsxwriter, which Odoo ships with.</td></tr>
+          <tr><th>PDF printing</th><td>Needs wkhtmltopdf, like every standard Odoo report.</td></tr>
+          <tr><th>Multi-company</th><td>Supported through record rules. Covered by an automated test.</td></tr>
+          <tr><th>Testing</th><td>An automated test suite runs on Odoo 19.0 Community sources. Enterprise has not been tested.</td></tr>
+          <tr><th>Data and services</th><td>No external services. Logs and settings are stored in your database.</td></tr>
+        </tbody>
+      </table>
+      <h5>Known limitations</h5>
+      <ul>
+        <li>The aging buckets are fixed at 30, 60, 90 and 120 days.</li>
+        <li>Figures are in the company currency. Foreign currency items show their original amount when enabled.</li>
+        <li>Scheduled sending covers customers. Vendor statements are sent from the wizard.</li>
+        <li>Journal items without a partner are not included.</li>
+        <li>Queued for Sending means the email was handed to the Odoo mail queue. Delivery depends on your mail server.</li>
+        <li>A past statement date uses the date of the later document of a reconciliation to decide whether an item was paid by then.</li>
+        <li>Labels and texts are in English and can be translated with the standard Odoo tools.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Frequently Asked Questions</h2>
+      <h5>Does it send anything after installation?</h5>
+      <p>No. Automatic sending is off until you switch it on. Manual sending asks for confirmation.</p>
+      <h5>What does Queued for Sending mean?</h5>
+      <p>The email was handed to the standard Odoo mail queue with the PDF attached. It leaves when your outgoing mail server processes the queue.</p>
+      <h5>Which partners are included?</h5>
+      <p>Customers or vendors with a posted receivable or payable balance in the company. Contacts of a company are grouped under the company. Documents without a partner are not included.</p>
+      <h5>Can I send a statement for last month?</h5>
+      <p>Yes. Set the Statement Date to the day you need. Payments made after that day are shown as still open.</p>
+      <h5>Where does the email go?</h5>
+      <p>To the Statement Email on the partner if filled, otherwise to contacts of type Invoice Address, otherwise to the partner email.</p>
+      <h5>Can a partner be left out?</h5>
+      <p>Yes. Tick Exclude From Statement Runs on the Statements tab of the partner. Scheduled runs skip them.</p>
+      <h5>Are the aging buckets configurable?</h5>
+      <p>No. They are fixed at 30, 60, 90 and 120 days.</p>
+      <h5>Do I need Sales or Purchase?</h5>
+      <p>No. It needs Invoicing and Discuss only, and works from the posted journal items.</p>
+      <h5>Does it support several currencies and companies?</h5>
+      <p>Yes. Amounts are shown in the company currency with the original amount if enabled. Settings and logs are per company.</p>
+      <h5>How can I contact AXSync for support?</h5>
+      <p>Email <a href="mailto:hunain@axsync.com">hunain@axsync.com</a> or use the Contact the Author option on this Odoo Apps Store page.</p>
+
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0;">
+    <div class="container">
+      <h2 style="margin-bottom: 15px;">Support and Publisher</h2>
+      <p><strong>Published by AXSync</strong></p>
+      <p>Website: www.axsync.com</p>
+      <p>Support email: <a href="mailto:hunain@axsync.com">hunain@axsync.com</a></p>
+      <p>Please include your Odoo version, the module version, and what you expected to see. Screenshots help.</p>
+      <p class="text-muted" style="font-size: 13px;">This module is published by AXSync and is not an official Odoo product. Odoo is a trademark of Odoo S.A.</p>
+    </div>
+  </div>
+</section>
+<section class="oe_container">
+  <div class="oe_row oe_spaced" style="padding: 30px 0; background-color: #f8f9fa;">
+    <div class="container text-center">
+      <h2 style="margin-bottom: 10px;">Send Every Customer a Clear Statement, on Time.</h2>
+      <p style="font-size: 17px;">Install AXSync Customer Statement Aging and put your receivables follow-up on a schedule.</p>
+      <p><strong>www.axsync.com</strong></p>
+    </div>
+  </div>
+</section>

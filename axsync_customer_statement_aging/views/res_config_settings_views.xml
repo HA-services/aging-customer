@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="axsync_statement_res_config_settings_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form.axsync.statement</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='account']" position="inside">
+                <block title="Customer Statements" name="axsync_statements">
+                    <setting id="axsync_st_layout_setting" string="Statement Defaults"
+                             help="Used when a statement is printed or emailed. They can be changed on every run.">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="axsync_st_type" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_type"/>
+                            </div>
+                            <div class="row">
+                                <label for="axsync_st_basis" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_basis"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="axsync_st_due_setting" help="Show the due date of every item on the statement.">
+                        <field name="axsync_st_show_due"/>
+                    </setting>
+                    <setting id="axsync_st_currency_setting"
+                             help="Show the amount in the original currency of foreign currency items.">
+                        <field name="axsync_st_show_currency"/>
+                    </setting>
+                    <setting id="axsync_st_footer_setting" help="Printed at the bottom of every statement and used in the email.">
+                        <field name="axsync_st_footer" placeholder="For example: payment terms or a thank-you note"/>
+                    </setting>
+                    <setting id="axsync_st_bank_setting" help="Bank details printed on customer statements.">
+                        <field name="axsync_st_bank" placeholder="Bank name, account number, IBAN"/>
+                    </setting>
+                    <setting id="axsync_st_auto_setting" help="Email the statement to every customer with a balance on a fixed day.">
+                        <field name="axsync_st_auto_send"/>
+                        <div class="content-group" invisible="not axsync_st_auto_send">
+                            <div class="row mt16">
+                                <label for="axsync_st_frequency" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_frequency"/>
+                            </div>
+                            <div class="row" invisible="axsync_st_frequency != 'weekly'">
+                                <label for="axsync_st_weekday" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_weekday"/>
+                            </div>
+                            <div class="row" invisible="axsync_st_frequency != 'monthly'">
+                                <label for="axsync_st_monthday" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_monthday"/>
+                            </div>
+                            <div class="row">
+                                <label for="axsync_st_min_balance" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_min_balance"/>
+                            </div>
+                            <div class="row">
+                                <label for="axsync_st_only_overdue" class="col-lg-5 o_light_label"/>
+                                <field name="axsync_st_only_overdue"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
