@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="axsync_statement_wizard_form" model="ir.ui.view">
+        <field name="name">axsync.statement.wizard.form</field>
+        <field name="model">axsync.statement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Statements of Account">
+                <field name="company_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <group>
+                    <group string="Who">
+                        <field name="side" widget="radio" options="{'horizontal': true}"/>
+                        <field name="scope"/>
+                        <field name="partner_ids" widget="many2many_tags" invisible="scope != 'selected'"
+                               required="scope == 'selected'"/>
+                        <field name="min_balance" invisible="scope == 'selected'"/>
+                    </group>
+                    <group string="What">
+                        <field name="statement_type"/>
+                        <field name="as_of_date"/>
+                        <field name="date_from" invisible="statement_type != 'activity'"
+                               required="statement_type == 'activity'"/>
+                        <field name="basis"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Layout">
+                        <field name="show_due"/>
+                        <field name="show_currency"/>
+                    </group>
+                    <group string="Result">
+                        <field name="partner_count"/>
+                        <field name="total_due"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="note" placeholder="Optional text printed at the bottom of every statement."/>
+                </group>
+                <div invisible="partner_count == 0">
+                    <separator string="Preview"/>
+                    <div class="text-muted small mb-2" invisible="partner_count &lt;= 1">
+                        The first statement is shown. The others use the same layout.
+                    </div>
+                    <div style="border: 1px solid #dee2e6; padding: 14px; background: #fff; max-height: 520px; overflow: auto;">
+                        <field name="preview_html" nolabel="1" readonly="1"/>
+                    </div>
+                </div>
+                <footer>
+                    <button name="action_print" type="object" string="Print PDF" class="btn-primary"
+                            invisible="partner_count == 0"/>
+                    <button name="action_send" type="object" string="Send by Email" class="btn-primary"
+                            invisible="partner_count == 0"
+                            confirm="The statements will be emailed to the partners. Continue?"/>
+                    <button name="action_xlsx" type="object" string="Export Excel" invisible="partner_count == 0"/>
+                    <button name="action_aging" type="object" string="Aging Report" invisible="partner_count == 0"/>
+                    <button string="Close" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="axsync_statement_wizard_customer_action" model="ir.actions.act_window">
+        <field name="name">Customer Statements</field>
+        <field name="res_model">axsync.statement.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_side': 'customer', 'default_scope': 'balance', 'dialog_size': 'extra-large'}</field>
+    </record>
+
+    <record id="axsync_statement_wizard_vendor_action" model="ir.actions.act_window">
+        <field name="name">Vendor Statements</field>
+        <field name="res_model">axsync.statement.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_side': 'vendor', 'default_scope': 'balance', 'dialog_size': 'extra-large'}</field>
+    </record>
+
+    <record id="axsync_statement_wizard_partner_action" model="ir.actions.act_window">
+        <field name="name">Statement of Account</field>
+        <field name="res_model">axsync.statement.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'extra-large'}</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+</odoo>
