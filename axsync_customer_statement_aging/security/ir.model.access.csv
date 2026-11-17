@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_axsync_statement_log_user,axsync.statement.log billing,model_axsync_statement_log,account.group_account_invoice,1,0,0,0
+access_axsync_statement_log_manager,axsync.statement.log manager,model_axsync_statement_log,account.group_account_manager,1,1,1,1
+access_axsync_statement_wizard,axsync.statement.wizard billing,model_axsync_statement_wizard,account.group_account_invoice,1,1,1,1
+access_axsync_statement_aging,axsync.statement.aging billing,model_axsync_statement_aging,account.group_account_invoice,1,1,1,1

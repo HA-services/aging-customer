@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="axsync_statement_log_tree" model="ir.ui.view">
+        <field name="name">axsync.statement.log.tree</field>
+        <field name="model">axsync.statement.log</field>
+        <field name="arch" type="xml">
+            <tree string="Statements Sent" create="0" edit="0"
+                  decoration-danger="state == 'failed'" decoration-warning="state == 'no_email'">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="side" optional="show"/>
+                <field name="statement_type" optional="hide"/>
+                <field name="as_of"/>
+                <field name="balance" sum="Total"/>
+                <field name="overdue" sum="Total" optional="show"/>
+                <field name="recipients" optional="show"/>
+                <field name="source" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'sent'"
+                       decoration-warning="state == 'no_email'" decoration-danger="state == 'failed'"/>
+                <field name="message" optional="show"/>
+                <field name="user_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="axsync_statement_log_form" model="ir.ui.view">
+        <field name="name">axsync.statement.log.form</field>
+        <field name="model">axsync.statement.log</field>
+        <field name="arch" type="xml">
+            <form string="Statement Sent" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="side"/>
+                            <field name="statement_type"/>
+                            <field name="as_of"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="balance"/>
+                            <field name="overdue"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="state"/>
+                            <field name="source"/>
+                            <field name="recipients"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="attachment_id"/>
+                            <field name="message"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="axsync_statement_log_search" model="ir.ui.view">
+        <field name="name">axsync.statement.log.search</field>
+        <field name="model">axsync.statement.log</field>
+        <field name="arch" type="xml">
+            <search string="Statements Sent">
+                <field name="partner_id"/>
+                <field name="recipients"/>
+                <filter name="sent" string="Sent" domain="[('state', '=', 'sent')]"/>
+                <filter name="problems" string="Needs Attention" domain="[('state', 'in', ('no_email', 'failed'))]"/>
+                <separator/>
+                <filter name="customers" string="Customers" domain="[('side', '=', 'customer')]"/>
+                <filter name="vendors" string="Vendors" domain="[('side', '=', 'vendor')]"/>
+                <separator/>
+                <filter name="scheduled" string="Scheduled" domain="[('source', '=', 'scheduled')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_source" string="Source" context="{'group_by': 'source'}"/>
+                    <filter name="group_day" string="Day" context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="axsync_statement_log_action" model="ir.actions.act_window">
+        <field name="name">Statements Sent</field>
+        <field name="res_model">axsync.statement.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="axsync_statement_log_search"/>
+    </record>
+</odoo>

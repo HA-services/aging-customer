@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="axsync_res_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.axsync.statement</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority">60</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_axsync_open_statement" type="object" class="oe_stat_button" icon="fa-file-text-o"
+                        groups="account.group_account_invoice" invisible="not id">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Statement</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Statements" name="axsync_statements" groups="account.group_account_invoice"
+                      invisible="not id">
+                    <group>
+                        <group string="Balances">
+                            <field name="axsync_st_currency_id" invisible="1"/>
+                            <field name="axsync_st_receivable"/>
+                            <field name="axsync_st_receivable_overdue"/>
+                            <field name="axsync_st_payable"/>
+                        </group>
+                        <group string="Statement Emails">
+                            <field name="axsync_st_email" placeholder="Leave empty to use the invoice contacts"/>
+                            <field name="axsync_st_exclude"/>
+                            <field name="axsync_st_last_sent"/>
+                            <label for="axsync_st_log_count"/>
+                            <div class="o_row">
+                                <field name="axsync_st_log_count" nolabel="1"/>
+                                <button name="action_axsync_view_statement_log" type="object" string="View" class="btn-link"
+                                        invisible="axsync_st_log_count == 0"/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

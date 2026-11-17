@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="axsync_statement_aging_tree" model="ir.ui.view">
+        <field name="name">axsync.statement.aging.tree</field>
+        <field name="model">axsync.statement.aging</field>
+        <field name="arch" type="xml">
+            <tree string="Aging Report" create="0" edit="0" delete="0" decoration-danger="bucket_5 != 0"
+                  decoration-warning="bucket_5 == 0 and (bucket_3 != 0 or bucket_4 != 0)">
+                <header>
+                    <button name="action_print_statements" type="object" string="Print Statements"/>
+                    <button name="action_send_statements" type="object" string="Send Statements"/>
+                </header>
+                <field name="partner_id"/>
+                <field name="company_id" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="bucket_0" sum="Total"/>
+                <field name="bucket_1" sum="Total"/>
+                <field name="bucket_2" sum="Total"/>
+                <field name="bucket_3" sum="Total"/>
+                <field name="bucket_4" sum="Total"/>
+                <field name="bucket_5" sum="Total"/>
+                <field name="total" sum="Total"/>
+                <field name="overdue" sum="Total" optional="show"/>
+                <field name="item_count" optional="show"/>
+                <field name="oldest_days" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="axsync_statement_aging_pivot" model="ir.ui.view">
+        <field name="name">axsync.statement.aging.pivot</field>
+        <field name="model">axsync.statement.aging</field>
+        <field name="arch" type="xml">
+            <pivot string="Aging Report">
+                <field name="partner_id" type="row"/>
+                <field name="bucket_0" type="measure"/>
+                <field name="bucket_1" type="measure"/>
+                <field name="bucket_2" type="measure"/>
+                <field name="bucket_3" type="measure"/>
+                <field name="bucket_4" type="measure"/>
+                <field name="bucket_5" type="measure"/>
+                <field name="total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="axsync_statement_aging_graph" model="ir.ui.view">
+        <field name="name">axsync.statement.aging.graph</field>
+        <field name="model">axsync.statement.aging</field>
+        <field name="arch" type="xml">
+            <graph string="Aging Report" type="bar">
+                <field name="partner_id"/>
+                <field name="total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="axsync_statement_aging_search" model="ir.ui.view">
+        <field name="name">axsync.statement.aging.search</field>
+        <field name="model">axsync.statement.aging</field>
+        <field name="arch" type="xml">
+            <search string="Aging Report">
+                <field name="partner_id"/>
+                <filter name="overdue" string="Has Overdue" domain="[('overdue', '!=', 0)]"/>
+                <filter name="over_90" string="Over 90 Days" domain="['|', ('bucket_4', '!=', 0), ('bucket_5', '!=', 0)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>
